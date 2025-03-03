@@ -140,10 +140,15 @@ void ExampleApp::onRenderGraphicsContext(const VRGraphicsState &renderState) {
     //TODO: Update the sphereFrame matrix to move the ball's position based on the dir variable.
     //Make the ball rotate so that it looks like it is rolling on the table.
     
+    vec3 normDir = glm::normalize(dir);
     
+    vec3 zaxis = glm::normalize(glm::column(sphereFrame, 3));
     
-    
-    
+    mat4 direction = translate(sphereFrame, dir);
+    mat4 origin = translate(sphereFrame, vec3(0));
+    mat4 zroll = toMat4(angleAxis(radians(45.0f), zaxis));
+    sphereFrame = zroll * direction;
+
 }
 
 void ExampleApp::onRenderGraphicsScene(const VRGraphicsState &renderState) {
